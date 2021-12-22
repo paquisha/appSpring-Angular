@@ -23,7 +23,10 @@ public class Cliente implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
-	
+	@PrePersist
+	public void prePersist() {
+		createAt = new Date();
+	}
 	
 	
 	public Long getId() {
