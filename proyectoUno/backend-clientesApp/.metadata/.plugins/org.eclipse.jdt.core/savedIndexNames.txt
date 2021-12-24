@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+/home/aekmot/aprender/appSpring-Angular/proyectoUno/backend-clientesApp/.metadata/.plugins/org.eclipse.jdt.core

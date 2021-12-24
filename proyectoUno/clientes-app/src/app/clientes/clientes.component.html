@@ -2,7 +2,13 @@
   <div class="card-header">Clientes</div>
   <div class="card-body text-primary">
     <h5 class="card-title">Listado Clientes</h5>
-    <table class="table table-bordered table-striped">
+    <div class="my-2 text-left">
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">Crear Cliente</button>
+    </div>
+    <div *ngIf="clientes?.length == 0" class="alert alert-info">
+      No hay registros en la tabla
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
       <thead>
         <tr>
           <th>Id</th>
@@ -24,7 +30,8 @@
               <button
                 type="button"
                 class="btn btn-warning btn-sm"
-                (click)="editar(cliente.id)"
+                name="button"
+                [routerLink]="['/clientes/form', cliente.id]"
               >
                 Editar
               </button>
@@ -33,18 +40,9 @@
             <div>
               <button
                 type="button"
-                class="btn btn-info btn-sm"
-                (click)="ver(cliente.id)"
-              >
-                Ver
-              </button>
-            </div>
-
-            <div>
-              <button
-                type="button"
                 class="btn btn-danger btn-sm"
-                (click)="borrar(cliente.id)"
+                name="button"
+                (click)="delete(cliente)"
               >
                 Borrar
               </button>
