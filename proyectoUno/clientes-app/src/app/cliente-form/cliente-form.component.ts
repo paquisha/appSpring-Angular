@@ -25,12 +25,12 @@ export class ClienteFormComponent implements OnInit {
   }
 
   save(): void{
-    this._clientesService.create(this.cliente).subscribe(data => {
+    this._clientesService.create(this.cliente).subscribe(json => {
       this._router.navigate(['/clientes'])
       swal.fire({
         icon: 'success',
         title: 'nuevo cliente',
-        text: `cliente creado con exito ${data.nombre} ${data.apellido}`
+        text: `cliente creado con exito ${json.cliente.nombre} ${json.cliente.apellido}`
       })
     })    
   }
