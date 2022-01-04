@@ -13,4 +13,6 @@ public interface UsuarioDao {
     void actualizar(Usuario usuario);
 
     void registrar(Usuario usuario);
+
+    boolean verificarEmailPassword(Usuario usuario);
 }

@@ -29,7 +29,7 @@ async function registrarUsuarios(){
         },
         body: JSON.stringify(datos)
     });
-    const usuario = await request.json();
+    //const usuario = await request.json();
 
     location.reload();
 
