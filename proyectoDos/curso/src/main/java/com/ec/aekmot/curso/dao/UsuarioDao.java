@@ -7,4 +7,10 @@ import java.util.List;
 public interface UsuarioDao {
 
     List<Usuario> getUsuario();
+
+    void elimnar(Long id);
+
+    void actualizar(Usuario usuario);
+
+    void registrar(Usuario usuario);
 }

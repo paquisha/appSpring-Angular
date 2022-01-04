@@ -1,20 +1,24 @@
 package com.ec.aekmot.curso.controllers;
 
+import com.ec.aekmot.curso.dao.UsuarioDao;
 import com.ec.aekmot.curso.models.Usuario;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class UsuarioController {
 
-    @RequestMapping(value= "usuarios")
+    @Autowired
+    private UsuarioDao usuarioDao;
+
+    @RequestMapping(value= "api/usuarios")
     public List<Usuario> getUsuarios(){
 
-        List<Usuario> usuarios = new ArrayList<>();
+        return usuarioDao.getUsuario();
+
+        /*List<Usuario> usuarios = new ArrayList<>();
         Usuario usuario = new Usuario();
         usuario.setId(1L);
         usuario.setNombre("Aime");
@@ -48,10 +52,15 @@ public class UsuarioController {
         usuarios.add(usuarioDos);
         usuarios.add(usuarioTres);
 
-        return usuarios;
+        return usuarios;*/
     }
 
-    @RequestMapping(value= "usuario/{id}")
+    @RequestMapping(value = "api/usuario", method = RequestMethod.POST)
+    public void registrarUsuario(@RequestBody Usuario usuario){
+        usuarioDao.registrar(usuario);
+    }
+
+    @RequestMapping(value= "api/usuario/{id}")
     public Usuario getUnUsuario(@PathVariable Long id){
         Usuario usuario = new Usuario();
         usuario.setId(id);
@@ -60,5 +69,11 @@ public class UsuarioController {
         usuario.setEmail("gina@mail.com");
         usuario.setTelefono("1234567890");
         return usuario;
+    }
+
+    @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.DELETE)
+    public void eliminar(@PathVariable Long id){
+        usuarioDao.elimnar(id);
+
     }
 }
