@@ -25,7 +25,5 @@ async function IniciarSesion(){
     }else{
         alert('credenciales Incorrectas');
     }
-
     //location.reload();
-
 }

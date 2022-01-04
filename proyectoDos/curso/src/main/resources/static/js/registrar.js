@@ -33,4 +33,7 @@ async function registrarUsuarios(){
 
     location.reload();
 
+    alert('Cuenta creada con exito');
+    window.location.href = 'login.html';
+
 }
