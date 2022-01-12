@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "2fd5deb2-5746-471a-bd73-36d86f2628f3": {
+      "ProjectGuid": "2fd5deb2-5746-471a-bd73-36d86f2628f3",
+      "DisplayName": "ApiFutbolistas",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
