@@ -1,6 +1,7 @@
 package ec.com.aekmot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +51,15 @@ public class EmployeeController {
 		return ResponseEntity.ok(updateEmployee);
 	}
 	
-	
+	@DeleteMapping("/employees/{id}")
+	public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id){
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Empleado no existe con el id: " + id));
+		
+		employeeRepository.delete(employee);
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 	
 	
 }
