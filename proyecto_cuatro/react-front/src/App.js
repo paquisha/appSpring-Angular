@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css';
 import { ListEmployeeComponent } from './components/ListEmployeeComponent';
 import HeaderComponent from './components/HeaderComponent';
@@ -14,7 +14,8 @@ function App() {
           <Routes>
             <Route exact path="/" element={<ListEmployeeComponent />}></Route>
             <Route path="/employees" element={<ListEmployeeComponent />}></Route>
-            <Route path="/add-employee" element={<AddEmployeeComponent />} ></Route>
+            <Route path="/add-employee" element={<AddEmployeeComponent />}></Route>
+            <Route path="/edit-employee/:id" element={<AddEmployeeComponent />}></Route>
           </Routes>
         </div>
         <FooterComponent />  

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import EmployeeService from '../services/EmployeeService';
 
 const AddEmployeeComponent = () => {
@@ -8,24 +8,55 @@ const AddEmployeeComponent = () => {
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
   const navigate = useNavigate();
+  const {id} = useParams();
 
-  const saveEmpleado = (e) =>{
+  const saveOrUpdateEmpleado = (e) =>{
       e.preventDefault();
       let employee = {
           firstName,
           lastName,
           emailId
       }
-      EmployeeService.createEmployee(employee).then(response =>{
-        navigate('/employees');
+
+      if(id){
+          EmployeeService.updateEmployee(id, employee).then(response =>{
+            navigate('/employees');
+          }).catch(error =>{
+              console.log(error);
+          })
+      }else{
+        EmployeeService.createEmployee(employee).then(response =>{
+            navigate('/employees');
+          }).catch(error => {
+              console.log(error);
+          })
+      }
+  }
+
+  useEffect(() => {
+      EmployeeService.getEmployeeById(id).then((response) => {
+          setFirstName(response.data.firstName);
+          setLastName(response.data.lastName);
+          setEmailId(response.data.emailId);
       }).catch(error => {
           console.log(error);
       })
+  }, [])
+
+  const title=()=>{
+      if(id){
+          return <h2 className="text-center">Editar empleado</h2>
+      }else{
+        return <h2 className="text-center">Agregar empleado</h2>
+      }
   }
 
   return (
     <div>
-      <h3>Agregar empleado</h3>
+      <br />
+      {
+          title()
+      }
       <br />
       <div className="container">
         <div className="row">
@@ -66,7 +97,7 @@ const AddEmployeeComponent = () => {
                     onChange={(e) => setEmailId(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="btn btn-success" onClick={(e) => saveEmpleado(e)}>Save</button>{" "}
+                <button type="submit" className="btn btn-success" onClick={(e) => saveOrUpdateEmpleado(e)}>Save</button>{" "}
                 <Link to="/employees" className='btn btn-danger' >Cancelar</Link>
               </form>
             </div>
