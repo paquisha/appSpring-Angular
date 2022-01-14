@@ -13,8 +13,8 @@ function App() {
         <div className='container'>
           <Routes>
             <Route exact path="/" element={<ListEmployeeComponent />}></Route>
-            <Route path="/employees" component={<ListEmployeeComponent />}></Route>
-            <Route path="/add-employee" component={<AddEmployeeComponent />} ></Route>
+            <Route path="/employees" element={<ListEmployeeComponent />}></Route>
+            <Route path="/add-employee" element={<AddEmployeeComponent />} ></Route>
           </Routes>
         </div>
         <FooterComponent />  

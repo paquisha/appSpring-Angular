@@ -22,11 +22,13 @@ export const ListEmployeeComponent = () => {
             <br />
             <table className='table table-bordered table-striped'>
                 <thead>
+                  <tr>
                     <th>id</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Email</th>
                     <th>Acciones</th>
+                  </tr>
                 </thead>
                 <tbody>
                     {
