@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import EmployeeService from '../services/EmployeeService';
 
 export const ListEmployeeComponent = () => {
@@ -16,6 +17,8 @@ export const ListEmployeeComponent = () => {
     return (
         <div className='container'>
             <h2 className='text-center'>Lista de Empleados</h2>
+            <br />
+            <Link to="/add-employee" className='btn btn-primary mb-2' >Agregar Empleado</Link>
             <br />
             <table className='table table-bordered table-striped'>
                 <thead>

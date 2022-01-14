@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom'
 import './App.css';
 import { ListEmployeeComponent } from './components/ListEmployeeComponent';
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
+import AddEmployeeComponent from './components/AddEmployeeComponent';
 
 function App() {
   return (
@@ -11,15 +12,13 @@ function App() {
         <HeaderComponent />
         <div className='container'>
           <Routes>
-            <Route exact path="/" component={ListEmployeeComponent}></Route>
-            <Route path="/employees" component={ListEmployeeComponent}></Route>
+            <Route exact path="/" element={<ListEmployeeComponent />}></Route>
+            <Route path="/employees" component={<ListEmployeeComponent />}></Route>
+            <Route path="/add-employee" component={<AddEmployeeComponent />} ></Route>
           </Routes>
         </div>
         <FooterComponent />  
-      </Router>
-      
-      <ListEmployeeComponent />
-      
+      </Router>      
     </div>
   );
 }
