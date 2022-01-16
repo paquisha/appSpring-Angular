@@ -1,3 +1,9 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
 <div class="card bg-dark text-white">
   <div class="card-header">{{ title }}</div>
   <div class="card-body">
@@ -10,8 +16,6 @@
             class="form-control"
             [(ngModel)]="cliente.nombre"
             name="nombre"
-            required
-            minlength="4"
             #nombre="ngModel"
           />
           <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
@@ -33,7 +37,6 @@
             class="form-control"
             [(ngModel)]="cliente.apellido"
             name="apellido"
-            required
             #apellido="ngModel"
           />
           <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
@@ -52,7 +55,6 @@
             class="form-control"
             [(ngModel)]="cliente.email"
             name="email"
-            required
             #email="ngModel"
           />
           <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
@@ -68,12 +70,12 @@
 
       <div class="form-group row">
         <div class="col-sm-6" *ngIf="!cliente.id">
-          <button class="btn btn-success" role="button" type="submit" (click)="save()" [disabled]="clienteForm.form.valid">
+          <button class="btn btn-success" role="button" type="submit" (click)="save()" [disabled]="!clienteForm.form.valid">
             Crear
           </button>
         </div>
         <div class="col-sm-6" *ngIf="cliente.id">
-          <button class="btn btn-warning" role="button" type="submit" (click)="update()" [disabled]="clienteForm.form.valid">
+          <button class="btn btn-warning" role="button" type="submit" (click)="update()" [disabled]="!clienteForm.form.valid">
             Actualizar
           </button>
         </div>

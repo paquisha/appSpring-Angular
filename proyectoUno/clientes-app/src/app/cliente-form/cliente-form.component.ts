@@ -16,6 +16,8 @@ export class ClienteFormComponent implements OnInit {
   cliente: Cliente = new Cliente();
   title: string = 'Crear Cliente';
 
+  errores: string[];
+
   constructor(private _clientesService: ClienteService,
     private _router: Router,
     private _activateRoute: ActivatedRoute) { }
@@ -32,6 +34,9 @@ export class ClienteFormComponent implements OnInit {
         title: 'nuevo cliente',
         text: `cliente creado con exito ${json.cliente.nombre} ${json.cliente.apellido}`
       })
+    },
+    err => {
+      this.errores = err.error.errors as string[];
     })    
   }
 
@@ -43,6 +48,9 @@ export class ClienteFormComponent implements OnInit {
         title: 'Cliente Actualizado',
         text: `cliente actualizado con exito ${data.nombre} ${data.apellido}`
       })
+    },
+    err => {
+      this.errores = err.error.errors as string[];
     })
   }
 
