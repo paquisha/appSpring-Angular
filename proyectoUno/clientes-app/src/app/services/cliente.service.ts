@@ -2,10 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Observable, catchError, throwError } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { Cliente } from '../clientes/cliente';
 import swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClientesComponent } from '../clientes/clientes.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +21,25 @@ export class ClienteService {
     private _router: Router,
     private _activateRoute: ActivatedRoute) { }
 
-  public findAll(): Observable<Cliente[]>{
-    return this._rest.get<Cliente[]>(this.BACK_SPRING).pipe(map(response =>{
-        let clientes = response as Cliente[];
-
-        return clientes.map(cliente =>{
+  public findAll(): Observable<any>{
+    return this._rest.get<Cliente[]>(this.BACK_SPRING).pipe(tap( (response: any ) =>{
+      (response.content as Cliente[]).forEach(cliente => {
+        console.log(cliente.nombre);
+      });
+      }),
+      map( (response: any) => {
+        (response.content as Cliente[]).map(cliente => {
           cliente.nombre = cliente.nombre.toUpperCase();
           cliente.apellido = cliente.apellido.toUpperCase();
           cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'en-US')
           return cliente;
-        })
+      });
+      return response;
+      }),
+      tap(response => {
+        (response.content as Cliente[]).forEach(cliente =>{
+          console.log(cliente.nombre);
+        });
       })
     );
   }
