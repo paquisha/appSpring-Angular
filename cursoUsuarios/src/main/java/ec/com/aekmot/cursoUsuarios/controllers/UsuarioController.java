@@ -1,89 +1,50 @@
 package ec.com.aekmot.cursoUsuarios.controllers;
 
 
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
+import ec.com.aekmot.cursoUsuarios.dao.UsuarioDao;
 import ec.com.aekmot.cursoUsuarios.models.Usuario;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ec.com.aekmot.cursoUsuarios.utils.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class UsuarioController {
+    @Autowired
+    private UsuarioDao usuarioDao;
+    @Autowired
+    private JWTUtil jwtUtil;
 
-    @RequestMapping(value = "usuario/{id}")
-    public Usuario getusuario(@PathVariable Long id){
-        Usuario usuario = new Usuario();
-        usuario.setId(id);
-        usuario.setNombre("Andres");
-        usuario.setApellido("Grijalva");
-        usuario.setEmail("andres.grijalval@mail.com");
-        usuario.setTelefono("1234567890");
-        return usuario;
+    @RequestMapping(value = "api/usuarios", method = RequestMethod.GET)
+    public List<Usuario> getUsuarios(@RequestHeader(value="Authorization") String token) {
+        if (!validarToken(token)) { return null; }
+
+        return usuarioDao.getUsuarios();
     }
 
-    @RequestMapping(value = "usuarios")
-    public List<Usuario> getusuarios(){
-        List<Usuario> usuarios = new ArrayList<>();
-
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Andres");
-        usuario.setApellido("Grijalva");
-        usuario.setEmail("andres.grijalval@mail.com");
-        usuario.setTelefono("1234567890");
-
-        Usuario usuario1 = new Usuario();
-        usuario1.setId(2L);
-        usuario1.setNombre("Aime");
-        usuario1.setApellido("Pachacama");
-        usuario1.setEmail("aime@mail.com");
-        usuario1.setTelefono("1234567890");
-
-        Usuario usuario2 = new Usuario();
-        usuario2.setId(3L);
-        usuario2.setNombre("Nathalia");
-        usuario2.setApellido("Pachacama");
-        usuario2.setEmail("naty@mail.com");
-        usuario2.setTelefono("1234567890");
-
-        usuarios.add(usuario);
-        usuarios.add(usuario1);
-        usuarios.add(usuario2);
-
-        return usuarios;
+    private boolean validarToken(String token) {
+        String usuarioId = jwtUtil.getKey(token);
+        return usuarioId != null;
     }
 
-    @RequestMapping(value = "usuario")
-    public Usuario editar(){
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Andres");
-        usuario.setApellido("Grijalva");
-        usuario.setEmail("andres.grijalval@mail.com");
-        usuario.setTelefono("1234567890");
-        return usuario;
+    @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)
+    public void registrarUsuario(@RequestBody Usuario usuario) {
+
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+        String hash = argon2.hash(1, 1024, 1, usuario.getPassword());
+        usuario.setPassword(hash);
+
+        usuarioDao.registrar(usuario);
     }
 
-    @RequestMapping(value = "usuario")
-    public Usuario eliminar(){
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Andres");
-        usuario.setApellido("Grijalva");
-        usuario.setEmail("andres.grijalval@mail.com");
-        usuario.setTelefono("1234567890");
-        return usuario;
+    @RequestMapping(value = "api/usuarios/{id}", method = RequestMethod.DELETE)
+    public void eliminar(@RequestHeader(value="Authorization") String token,
+                         @PathVariable Long id) {
+        if (!validarToken(token)) { return; }
+        usuarioDao.eliminar(id);
     }
-
-    @RequestMapping(value = "usuario")
-    public Usuario buscar(){
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Andres");
-        usuario.setApellido("Grijalva");
-        usuario.setEmail("andres.grijalval@mail.com");
-        usuario.setTelefono("1234567890");
-        return usuario;
-    }
-
-
 }
