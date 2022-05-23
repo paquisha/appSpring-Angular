@@ -1,21 +1,37 @@
-import {
-  IonButtons,
-  IonCard,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonRow,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
-import { useParams } from "react-router";
+import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { add, close, pencil } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
+import Customer from './Customer';
+import { removeCustomer, searchCustomers } from './CustomerApi';
 
-const CustomerList: React.FC = () => {
-  const { name } = useParams<{ name: string }>();
-  const titulo = 'Gestion de usuarios';
+
+const CustomerList: React.FC = (props: any) => {
+  const { name } = useParams<{ name: string; }>();
+  const [clientes, setClientes] = useState<Customer[]>([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    search();
+  }, [history.location.pathname]);
+
+  const search = async () => {
+    let result = await searchCustomers();
+    setClientes(result);
+  }
+
+  const remove = async (id: string) => {
+    await removeCustomer(id);
+    search();
+  }
+
+  const addCustomer = () => {
+    history.push('/page/customer/new');
+  }
+
+  const editCustomer = (id: string) => {
+    history.push('/page/customer/' + id);
+  }
 
   return (
     <IonPage>
@@ -34,146 +50,62 @@ const CustomerList: React.FC = () => {
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
+
+
+
+
+
         <IonContent>
           <IonCard>
-          <IonTitle size="large">{titulo}</IonTitle>
+            <IonTitle>Gestión de Clientes</IonTitle>
+
+            <IonItem>
+              <IonButton onClick={addCustomer} color="primary" fill="solid" slot="end" size="default">
+                <IonIcon icon={add} />
+                Agregar Cliente
+              </IonButton>
+            </IonItem>
+
             <IonGrid className="table">
               <IonRow>
-                <IonCol>ion-col</IonCol>
-                <IonCol>ion-col</IonCol>
-                <IonCol>ion-col</IonCol>
-                <IonCol>ion-col</IonCol>
+                <IonCol>Nombre</IonCol>
+                <IonCol>Email</IonCol>
+                <IonCol>Teléfono</IonCol>
+                <IonCol>Dirección</IonCol>
+                <IonCol>Acciones</IonCol>
               </IonRow>
 
-              <IonRow>
-                <IonCol size="6">ion-col size="6"</IonCol>
-                <IonCol>ion-col</IonCol>
-                <IonCol>ion-col</IonCol>
-              </IonRow>
+              {clientes.map((cliente: Customer) =>
+                <IonRow>
+                  <IonCol>{cliente.firstname} {cliente.lastname}</IonCol>
+                  <IonCol>{cliente.email}</IonCol>
+                  <IonCol>{cliente.phone}</IonCol>
+                  <IonCol>{cliente.address}</IonCol>
+                  <IonCol>
+                    <IonButton color="primary" fill="clear"
+                      onClick={() => editCustomer(String(cliente.id))}>
+                      <IonIcon icon={pencil} slot="icon-only" />
+                    </IonButton>
 
-              <IonRow>
-                <IonCol size="3">ion-col size="3"</IonCol>
-                <IonCol>ion-col</IonCol>
-                <IonCol size="3">ion-col size="3"</IonCol>
-              </IonRow>
+                    <IonButton color="danger" fill="clear"
+                      onClick={() => remove(String(cliente.id))}>
+                      <IonIcon icon={close} slot="icon-only" />
+                    </IonButton>
+                  </IonCol>
+                </IonRow>
+              )}
 
-              <IonRow>
-                <IonCol size="3">ion-col size="3"</IonCol>
-                <IonCol size="3" offset="3">
-                  ion-col size="3" offset="3"
-                </IonCol>
-              </IonRow>
-
-              <IonRow>
-                <IonCol>ion-col</IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                </IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                </IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                  <br />#
-                </IonCol>
-              </IonRow>
-
-              <IonRow>
-                <IonCol className="ion-align-self-start">ion-col start</IonCol>
-                <IonCol className="ion-align-self-center">
-                  ion-col center
-                </IonCol>
-                <IonCol className="ion-align-self-end">ion-col end</IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                </IonCol>
-              </IonRow>
-
-              <IonRow className="ion-align-items-start">
-                <IonCol>start ion-col</IonCol>
-                <IonCol>start ion-col</IonCol>
-                <IonCol className="ion-align-self-end">
-                  start ion-col end
-                </IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                </IonCol>
-              </IonRow>
-
-              <IonRow className="ion-align-items-center">
-                <IonCol>center ion-col</IonCol>
-                <IonCol>center ion-col</IonCol>
-                <IonCol>center ion-col</IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                </IonCol>
-              </IonRow>
-
-              <IonRow className="ion-align-items-end">
-                <IonCol>end ion-col</IonCol>
-                <IonCol className="ion-align-self-start">
-                  end ion-col start
-                </IonCol>
-                <IonCol>end ion-col</IonCol>
-                <IonCol>
-                  ion-col
-                  <br />#
-                  <br />#
-                </IonCol>
-              </IonRow>
-
-              <IonRow>
-                <IonCol size="12" size-sm>
-                  ion-col size="12" size-sm
-                </IonCol>
-                <IonCol size="12" size-sm>
-                  ion-col size="12" size-sm
-                </IonCol>
-                <IonCol size="12" size-sm>
-                  ion-col size="12" size-sm
-                </IonCol>
-                <IonCol size="12" size-sm>
-                  ion-col size="12" size-sm
-                </IonCol>
-              </IonRow>
-
-              <IonRow>
-                <IonCol size="12" size-md>
-                  ion-col size="12" size-md
-                </IonCol>
-                <IonCol size="12" size-md>
-                  ion-col size="12" size-md
-                </IonCol>
-                <IonCol size="12" size-md>
-                  ion-col size="12" size-md
-                </IonCol>
-                <IonCol size="12" size-md>
-                  ion-col size="12" size-md
-                </IonCol>
-              </IonRow>
-
-              <IonRow>
-                <IonCol size="6" size-lg offset="3">
-                  ion-col size="6" size-lg offset="3"
-                </IonCol>
-                <IonCol size="3" size-lg>
-                  ion-col size="3" size-lg
-                </IonCol>
-              </IonRow>
             </IonGrid>
           </IonCard>
+
+
         </IonContent>
+
+
+
+
+
+
       </IonContent>
     </IonPage>
   );
