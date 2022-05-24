@@ -1,7 +1,0 @@
-{
-  "name": "front-react",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
