@@ -15,6 +15,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\aprender\apps-fullStack\CrudMVCCore\CrudMVCCore
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/aprender/apps-fullStack/CrudMVCCore/CrudMVCCore/Views/Contactos/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9zXEVkaXRhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/aprender/apps-fullStack/CrudMVCCore/CrudMVCCore/Views/Contactos/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9zXEVsaW1pbmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/aprender/apps-fullStack/CrudMVCCore/CrudMVCCore/Views/Contactos/Guardar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9zXEd1YXJkYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/aprender/apps-fullStack/CrudMVCCore/CrudMVCCore/Views/Contactos/Listar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9zXExpc3Rhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/aprender/apps-fullStack/CrudMVCCore/CrudMVCCore/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
