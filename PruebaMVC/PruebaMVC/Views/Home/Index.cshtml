@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+  <div class="card-header">
+    Factura
+  </div>
+  <div class="card-body">
+
+    <div class="row">
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Vendedor</label>
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Orden de compra</label>
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Enviar por</label>
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Terminos y condiciones</label>
+              </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row align-items-end">
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Codigo</label>
+                <input type="email" class="form-control form-control-sm" id="txtCodigo">
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Descripcion</label>
+                <input type="email" class="form-control form-control-sm" id="txtDescripcion">
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Cantidad</label>
+                <input type="email" class="form-control form-control-sm" id="txtCantidad">
+              </div>
+        </div>
+        <div class="col-sm-3">
+             <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Precio</label>
+                <input type="email" class="form-control form-control-sm" id="txtPrecio">
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-sm" id="tbProducto">
+              <thead>
+                <tr class="table-dark">
+                  <th scope="col">Codigo</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <div id="masTotal">                
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-danger mb-2 btn-sm" id="btnAgregar">+NUEVA FILA</button>
+        </div>
+         <div class="col-md-3">
+            <button class="btn btn-primary mb-2 btn-sm" id="btnTerminar">Terminar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+@section Scripts{
+    <script>
+       
+        $("#btnAgregar").on("click",function(){
+
+            var total = parseFloat($("#txtPrecio").val()) * parseFloat($("#txtCantidad").val())
+
+            $("#tbProducto tbody").append(
+                $("<tr>").append(
+                    $("<td>").text( $("#txtCodigo").val() ),
+                    $("<td>").text( $("#txtDescripcion").val() ),
+                    $("<td>").text($("#txtCantidad").val()),
+                    $("<td>").text($("#txtPrecio").val()),
+                    $("<td>").text(total)
+                )
+            )
+
+            //OMITIR
+            $("#txtCodigo").val("")
+            $("#txtDescripcion").val("")
+            $("#txtPrecio").val("")
+            $("#txtCantidad").val("")
+            $("#txtDescripcion").focus();
+
+        })
+
+         $("#btnTerminar").on("click",function(){
+
+             var detalle_venta = []
+             var total=0;
+
+             $('table > tbody  > tr').each(function(index, tr) { 
+
+               detalle_venta.push(
+                    {
+                        Cantidad: $(tr).find('td:eq(0)').text(),
+                        Producto: $(tr).find('td:eq(1)').text(),
+                        Cantidad : parseInt( $(tr).find('td:eq(2)').text()),
+                        Precio: parseFloat($(tr).find('td:eq(3)').text()),
+                        Total :  parseFloat($(tr).find('td:eq(4)').text())
+                    }
+               )
+
+               total = total + parseFloat($(tr).find('td:eq(4)').text())
+
+            });
+            $("#masTotal").append(
+                $("<Label>").text(total)
+            )
+            console.log(detalle_venta)
+            console.log(total)
+
+        })
+
+    </script>
+
+}
