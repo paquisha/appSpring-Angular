@@ -1,7 +1,0 @@
-{
-  "name": "proyectoreact",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
