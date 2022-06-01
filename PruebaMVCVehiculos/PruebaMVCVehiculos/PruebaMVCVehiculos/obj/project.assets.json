@@ -5916,11 +5916,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos.csproj",
+      "projectUniqueName": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos.csproj",
       "projectName": "PruebaMVCVehiculos",
-      "projectPath": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos.csproj",
+      "projectPath": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos.csproj",
       "packagesPath": "C:\\Users\\aekmot\\.nuget\\packages\\",
-      "outputPath": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\obj\\",
+      "outputPath": "C:\\aprender\\apps-fullStack\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\PruebaMVCVehiculos\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

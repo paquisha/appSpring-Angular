@@ -1,4 +1,4 @@
-﻿using BackVehiculos.Context;
+﻿using BackVehiculos.Datos;
 using BackVehiculos.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,98 +10,37 @@ namespace BackVehiculos.Controllers
     [ApiController]
     public class VehiculosController : ControllerBase
     {
-        private readonly AppDbContext _context;
-
-        public VehiculosController(AppDbContext context)
-        {
-            _context = context;
-        }
+        VehiculoDatos vehiculodatos = new VehiculoDatos();
 
         [HttpGet]
-        public ActionResult Get()
+        public List<Vehiculo> Get()
         {
-            try
-            {
-                return Ok(_context.Vehiculos.ToList());
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return vehiculodatos.Listar();
         }
 
-        [HttpGet("{id}", Name = "GetVehiculo")]
-        public ActionResult Get(int id)
+        [HttpGet("{id}")]
+        public Vehiculo Get(int id)
         {
-            try
-            {
-                var vehiculo = _context.Vehiculos.FirstOrDefault(f => f.id == id);
-                return Ok(vehiculo);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return vehiculodatos.ObtenerPorId(id);
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Vehiculo vehiculo)
+        public bool Post([FromBody] Vehiculo vehiculo)
         {
-            try
-            {
-                _context.Vehiculos.Add(vehiculo);
-                _context.SaveChanges();
-                return CreatedAtRoute("GetVehiculo", new { id = vehiculo.id }, vehiculo);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            vehiculo.fecha_registro = DateTime.Now;
+            return vehiculodatos.Guardar(vehiculo);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Vehiculo vehiculo)
+        [HttpPut("{id:int}")]
+        public bool Put(int id, [FromBody] Vehiculo vehiculo)
         {
-            try
-            {
-                if (vehiculo.id == id)
-                {
-                    _context.Entry(vehiculo).State = EntityState.Modified;
-                    _context.SaveChanges();
-                    return CreatedAtRoute("GetVehiculo", new { id = vehiculo.id }, vehiculo);
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
+            return vehiculodatos.Editar(vehiculo);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public bool Delete(int id)
         {
-            try
-            {
-                var vehiculo = _context.Vehiculos.FirstOrDefault(f => f.id == id);
-                if (vehiculo != null)
-                {
-                    _context.Vehiculos.Remove(vehiculo);
-                    return Ok(id);
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return vehiculodatos.eliminar(id);
         }
     }
 }

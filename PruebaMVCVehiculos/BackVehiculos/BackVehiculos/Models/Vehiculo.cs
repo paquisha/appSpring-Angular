@@ -1,7 +1,10 @@
-﻿namespace BackVehiculos.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BackVehiculos.Models
 {
     public class Vehiculo
     {
+        [Key]
         public int id { get; set; }
         public string codigo { get; set; }
         public string chasis { get; set; }
