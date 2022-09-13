@@ -2,13 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from 'src/Model/Product';
-import configurl from '../../assets/config/config.json'
+//import configurl from '../assets/config/config.json'
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
+  configurl = require('../assets/config/config.json');
 
-  url = configurl.apiServer.url + '/product';
+  url = this.configurl.apiServer.url + '/product';
   constructor(private http: HttpClient) { }
   getProductList(): Observable<Product[]> {
     return this.http.get<Product[]>(this.url);

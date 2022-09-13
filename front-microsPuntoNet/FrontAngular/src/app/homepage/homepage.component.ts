@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
+  title: string ="Ocelot Gateway Microservices Demo";
+
   constructor() { }
 
   ngOnInit(): void {

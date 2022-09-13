@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import configurl from '../../assets/config/config.json'
+//import configurl from '../assets/config/config.json'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from 'src/Model/User';
 
@@ -8,8 +8,9 @@ import { User } from 'src/Model/User';
   providedIn: 'root'
 })
 export class UsersService {
+  configurl = require('../assets/config/config.json');
 
-  url = configurl.apiServer.url + '/user';
+  url = this.configurl.apiServer.url + '/user';
   constructor(private http: HttpClient) { }
   getUserList(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
