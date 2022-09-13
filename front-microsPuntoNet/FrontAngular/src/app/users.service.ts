@@ -8,7 +8,15 @@ import { User } from 'src/Model/User';
   providedIn: 'root'
 })
 export class UsersService {
-  configurl = require('../assets/config/config.json');
+  //configurl = require('../assets/config/config.json');
+
+  configurl = {
+    apiServer: 
+    {
+      url: "https://localhost:7032/gateway",
+      version: "v1"
+    }
+  }
 
   url = this.configurl.apiServer.url + '/user';
   constructor(private http: HttpClient) { }

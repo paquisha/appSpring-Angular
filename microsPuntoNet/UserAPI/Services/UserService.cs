@@ -8,7 +8,7 @@ namespace UserAPI.Services
     {
         private readonly DbContextUser _dbContext;
 
-        private UserService(DbContextUser dbContext)
+        public UserService(DbContextUser dbContext)
         {
             _dbContext = dbContext;
         }
@@ -20,10 +20,10 @@ namespace UserAPI.Services
             return result.Entity;
         }
 
-        public bool DeleteUser(int id)
+        public bool DeleteUser(int Id)
         {
-            var filterData = _dbContext.Users.Where(x => x.UserId == id).FirstOrDefault();
-            var result = _dbContext.Remove(filterData);
+            var filteredData = _dbContext.Users.Where(x => x.UserId == Id).FirstOrDefault();
+            var result = _dbContext.Remove(filteredData);
             _dbContext.SaveChanges();
             return result != null ? true : false;
         }

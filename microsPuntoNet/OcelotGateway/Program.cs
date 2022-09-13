@@ -2,11 +2,18 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 
 // Add services to the container.
 //configuracion de cors
-builder.Services.AddCors(options => {
-    options.AddPolicy("CORSPolicy", builder => builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((hosts) => true));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                      });
 });
 //fin de configuracion de cors
 
@@ -29,7 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //cors
-app.UseCors("CORSPolicy");
+app.UseCors(MyAllowSpecificOrigins);
 //fin de cors
 app.UseHttpsRedirection();
 

@@ -2,13 +2,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from 'src/Model/Product';
-//import configurl from '../assets/config/config.json'
+//import configurl from '../assets/config/config.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  configurl = require('../assets/config/config.json');
+  configurl = {
+    apiServer: 
+    {
+      url: "https://localhost:7032/gateway",
+      version: "v1"
+    }
+  }
 
   url = this.configurl.apiServer.url + '/product';
   constructor(private http: HttpClient) { }
