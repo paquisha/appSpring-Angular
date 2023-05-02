@@ -1,0 +1,55 @@
+﻿@model List<Vehiculo>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Lista Vehiculos
+    </div>
+    <div class="card-body">
+        <a asp-action="Guardar" asp-controller="Vehiculos" class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear Nuevo</a>
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Chasis</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Anio Modelo</th>
+                    <th>Color</th>
+                    <th>Estado</th>
+                    <th>Fecha Registro</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.codigo</td>
+                    <td>@item.chasis</td>
+                    <td>@item.marca</td>
+                    <td>@item.modelo</td>
+                    <td>@item.anio_modelo</td>
+                    <td>@item.color</td>
+                    <td>@item.estado</td>
+                    <td>@item.fecha_registro</td>
+                    <td>
+                        <a asp-action="Editar" asp-controller="Vehiculos" class="btn btn-warning btn-sm" asp-route-Id="@item.id">Editar</a>
+                        <a asp-action="Eliminar" asp-controller="Vehiculos" class="btn btn-danger btn-sm" asp-route-Id="@item.id">Eliminar</a>
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
