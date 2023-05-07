@@ -17,9 +17,6 @@ export class HomeComponent {
             this.loading = true;
             this.autores = autors;
             console.log(this.autores);
-            this.autores.forEach((nombre) =>{
-                console.log(nombre);
-            })
         });
     }
 }
