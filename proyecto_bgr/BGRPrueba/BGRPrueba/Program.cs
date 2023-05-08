@@ -2,6 +2,7 @@
 // Add services to the container.
 
 using BGRPrueba.DBContexts;
+using BGRPrueba.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -18,8 +19,11 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+//configurar app settings
 builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DeafultConection")));
+//configurar repository
+builder.Services.AddTransient<IPersonaRepository, PersonaRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
