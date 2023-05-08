@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-ScoreCard.Worker-59191DC9-26DC-4432-9AA1-78294DB44D93</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ScoreCard.Api\ScoreCard.Api.csproj" />
+      <ProjectReference Include="..\ScoreCard.Domain\ScoreCard.Domain.csproj" />
+      <ProjectReference Include="..\ScoreCard.Infrastructure\ScoreCard.Infrastructure.csproj" />
+    </ItemGroup>
+</Project>

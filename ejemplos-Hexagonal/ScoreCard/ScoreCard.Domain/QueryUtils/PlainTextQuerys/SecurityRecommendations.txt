@@ -1,0 +1,151 @@
+securityresources
+        | where type == "microsoft.security/assessments" or type == "microsoft.security/assessments/governanceassignments"
+        | where subscriptionId == "{subscriptionId}"
+        | extend source = iff(type == "microsoft.security/assessments", trim(' ', tolower(tostring(properties.resourceDetails.Source))), dynamic(null))
+        | extend resourceId = iff(type == "microsoft.security/assessments", trim(" ", tolower(tostring(case(source =~ "azure", properties.resourceDetails.Id,
+            (type == "microsoft.security/assessments" and (source =~ "aws" and isnotempty(tostring(properties.resourceDetails.ConnectorId)))), properties.resourceDetails.Id,
+            (type == "microsoft.security/assessments" and (source =~ "gcp" and isnotempty(tostring(properties.resourceDetails.ConnectorId)))), properties.resourceDetails.Id,
+            source =~ "aws", properties.resourceDetails.AzureResourceId,
+            source =~ "gcp", properties.resourceDetails.AzureResourceId,
+            extract("^(.+)/providers/Microsoft.Security/assessments/.+$",1,id)
+            )))), dynamic(null))
+        | extend isAssessment = iff(type == "microsoft.security/assessments", 1, 0)
+        | extend isAssignment = iff(type == "microsoft.security/assessments/governanceassignments", 1, 0)
+        | extend assessmentId = iff(type == "microsoft.security/assessments", id, dynamic(null))
+        | extend assignedResourceId = iff(type == "microsoft.security/assessments/governanceassignments", tostring(properties.assignedResourceId), dynamic(null))
+        | extend idForSummarize = iff(isAssessment == 1, tolower(assessmentId), tolower(assignedResourceId))
+        | extend assessmentKey = iff(type == "microsoft.security/assessments", name, dynamic(null))
+        | extend assessmentDisplayName = iff(type == "microsoft.security/assessments", tostring(properties.displayName), dynamic(null))
+        | extend displayName = assessmentDisplayName
+        | project-away assessmentDisplayName
+        | extend statusCode = iff(type == "microsoft.security/assessments", tostring(properties.status.code), dynamic(null))
+        | extend isUnhealthy = iff(statusCode == "Unhealthy", 1, 0)
+        | extend maturityLevel = iff(type == "microsoft.security/assessments", case(
+                    isnull(properties.metadata.preview), "GA",
+                    tobool(properties.metadata.preview), "Preview",
+                    "GA"), dynamic(null))
+        | extend statusPerInitiative = todynamic(properties.statusPerInitiative)
+        | extend regexResourceId = iff(type == "microsoft.security/assessments", extract_all(@"/providers/([^/]+)(?:/([^/]+)/[^/]+(?:/([^/]+)/[^/]+)?)?/([^/]+)/[^/]+(?:/([^/]+)/[^/]+)?$", resourceId), dynamic(null))
+        | extend regexResourceType = iff(type == "microsoft.security/assessments", regexResourceId[0], dynamic(null))
+        | extend providerName = iff(type == "microsoft.security/assessments", regexResourceType[0], dynamic(null))
+        | extend mainType = iff(type == "microsoft.security/assessments", case(regexResourceType[1] !~ "", strcat("/",regexResourceType[1]), ""), dynamic(null))
+        | extend extendedType = iff(type == "microsoft.security/assessments", case(regexResourceType[2] !~ "", strcat("/",regexResourceType[2]), ""), dynamic(null))
+        | extend resourceType = iff(type == "microsoft.security/assessments", case(regexResourceType[3] !~ "", strcat("/",regexResourceType[3]), ""), dynamic(null))
+        | extend additionalType = iff(type == "microsoft.security/assessments", case(regexResourceType[4] !~ "", strcat("/",regexResourceType[4]), ""), dynamic(null))
+        | extend typeFullPath = iff(type == "microsoft.security/assessments", case(
+                array_length(split(resourceId, '/')) == 3, 'subscription',
+                array_length(split(resourceId, '/')) == 5, 'resourcegroups',
+                (type == "microsoft.security/assessments" and (source =~ "gcp" and isnotempty(tostring(properties.resourceDetails.ConnectorId)))) or (type == "microsoft.security/assessments" and (source =~ "aws" and isnotempty(tostring(properties.resourceDetails.ConnectorId)))), tolower(strcat(providerName, mainType, "/", tostring(properties.additionalData.ResourceProvider), tostring(properties.additionalData.ResourceType))),
+                strcat(providerName, mainType, extendedType, resourceType, additionalType)), dynamic(null))
+        | extend severity = iff(type == "microsoft.security/assessments", tostring(properties.metadata.severity), dynamic(null))
+| where ((severity =~ "High")) or (isAssessment == 0) or ((severity =~ "Medium")) or ((severity =~ "Low"))
+        | extend severityNumber = iff(type == "microsoft.security/assessments", case(
+                    severity == "Low", 1,
+                    severity == "Medium", 2,
+                    severity == "High", 3,
+                    dynamic(null)
+                ), dynamic(null))
+        | extend environment = iff(type == "microsoft.security/assessments", case(
+                    source == "azure" or source == "onpremise", "Azure",
+                    source == "aws", "AWS",
+                    source == "gcp", "GCP",
+                    dynamic(null)
+                ), dynamic(null))
+| where ((environment =~ "AWS" or environment =~ "Azure" or environment =~ "GCP")) or (isAssessment == 0)
+        | extend dueDate = iff(type == "microsoft.security/assessments/governanceassignments", todatetime(properties.remediationDueDate), dynamic(null))
+        | extend eta = iff(type == "microsoft.security/assessments/governanceassignments", todatetime(properties.remediationEta.eta), dynamic(null))
+        | extend govCompletionStatus = iff(type == "microsoft.security/assessments/governanceassignments", case(
+                            isnull(todatetime(properties.remediationDueDate)), "NoDueDate",
+                            // We round up the current date time to be the start of the day, as the due date is inclusive
+                            todatetime(properties.remediationDueDate) >= bin(now(), 1d), "OnTime",
+                            "Overdue"
+                        ), dynamic(null))
+        | extend isGracePeriod = iff(type == "microsoft.security/assessments/governanceassignments", iff(govCompletionStatus == "OnTime", tobool(properties.isGracePeriod), false), dynamic(null))
+        | summarize 
+                    statusPerInitiative = anyif(statusPerInitiative, isAssessment == 1),
+                    source = anyif(source, isAssessment == 1),
+                    assessmentKey = anyif(assessmentKey, isAssessment == 1),
+                    resourceId = anyif(resourceId, isAssessment == 1),
+                    displayName = anyif(displayName, isAssessment == 1),
+                    statusCode = anyif(statusCode, isAssessment == 1),
+                    maturityLevel = anyif(maturityLevel, isAssessment == 1),
+                    severity = anyif(severity, isAssessment == 1),
+                    severityNumber = anyif(severityNumber, isAssessment == 1),
+                    environment = anyif(environment, isAssessment == 1),
+                    isUnhealthy = anyif(isUnhealthy, isAssessment == 1),
+                    typeFullPath = anyif(typeFullPath, isAssessment == 1),
+                    dueDate = anyif(dueDate, isAssignment == 1),
+                    eta = anyif(eta, isAssignment == 1),
+                    isGracePeriod = anyif(isGracePeriod, isAssignment == 1),
+                    govCompletionStatus = anyif(govCompletionStatus, isAssignment == 1),
+                    hasAssignment = max(isAssignment),
+                    hasAssessmentData = sum(isAssessment) by idForSummarize
+        | where hasAssessmentData > 0
+        | mv-expand statusPerInitiative limit 400
+        | extend policyInitiativeName = tostring(statusPerInitiative.policyInitiativeName)
+| where ((policyInitiativeName =~ "ASC Default" or policyInitiativeName =~ "ISO 27001:2013" or policyInitiativeName =~ "NIST SP 800 53 R5"))
+        | extend now = now()
+        | extend completionStatus = case(
+            isUnhealthy == 0, "Completed", 
+            govCompletionStatus == "Overdue", "Overdue",
+            govCompletionStatus == "OnTime", "OnTime",
+            "Unassigned")
+        | where ((completionStatus =~ "Unassigned"))
+        | extend completionStatusNumber = case(
+            completionStatus == "Completed", 0,
+            completionStatus in ("Unassigned", "Unhealthy"), 1,
+            completionStatus == "OnTime", 2,
+            completionStatus == "Overdue", 3,
+            -1)
+        | summarize initiatives = make_set_if(policyInitiativeName, isnotempty(policyInitiativeName)),
+                    //source = any(source),
+                    assessmentKey = any(assessmentKey),
+                    displayName = any(displayName),
+                    statusCode = any(statusCode),
+                    maturityLevel = any(maturityLevel),
+                    severity = any(severity),
+                    severityNumber = any(severityNumber),
+                    environment = any(environment),
+                    dueDate = any(dueDate),
+                    eta = any(eta),
+                    isGracePeriod = any(isGracePeriod),
+                    typeFullPath = any(typeFullPath),
+                    completionStatus = any(completionStatus),
+                    completionStatusNumber = any(completionStatusNumber) by idForSummarize
+        | summarize resourceCount = count(),
+                    environments = make_set(environment),
+                    displayName = any(displayName),
+                    maturityLevel = any(maturityLevel),
+                    initiatives = make_set(initiatives),
+                    resourceTypes = make_set(typeFullPath),
+                    severity = any(severity),
+                    severityNumber = any(severityNumber),
+                    dueDate = min(dueDate),
+                    eta = min(eta),
+                    isGracePeriod = iff(sum(isGracePeriod) > 0, 1, 0),
+                    completionStatusNumber = max(completionStatusNumber) by assessmentKey, statusCode
+        | extend statusAndCount = pack("statusCode", statusCode, "resourceCount", resourceCount)
+        | summarize statusAndCount = make_list(statusAndCount),
+                    resourceCount = sum(resourceCount),
+                    environments = make_set(environments),
+                    displayName = any(displayName),
+                    maturityLevel = any(maturityLevel),
+                    initiatives = make_set(initiatives),
+                    severity = any(severity),
+                    severityNumber = any(severityNumber),
+                    dueDate = min(dueDate),
+                    eta = min(eta),
+                    isGracePeriod = iff(sum(isGracePeriod) > 0, 1, 0),
+                    resourceTypes = make_set(resourceTypes),
+                    completionStatusNumber = max(completionStatusNumber) by assessmentKey
+        | extend completionStatus = case(
+            completionStatusNumber == 0, "Completed",
+            completionStatusNumber == 1, "Unassigned",
+            completionStatusNumber == 2, "OnTime",
+            completionStatusNumber == 3, "Overdue",
+            "Unknown")
+        | order by severityNumber desc
+            | extend controlsData = dynamic([])
+            | order by severityNumber desc
+| project assessmentKey, resourceCount, environments, displayName, maturityLevel,
+initiatives, severity, severityNumber, completionStatus, completionStatusNumber

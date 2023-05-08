@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Operations\**" />
+      <EmbeddedResource Remove="Operations\**" />
+      <None Remove="Operations\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Identity" Version="1.8.2" />
+      <PackageReference Include="Azure.ResourceManager.ResourceGraph" Version="1.0.1" />
+    </ItemGroup>
+
+</Project>
