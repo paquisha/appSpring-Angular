@@ -1,4 +1,5 @@
 ﻿using Nexti.Infrastructure.Commons.Bases;
+using Nexti.Infrastructure.Commons.Bases.Request;
 using Nexti.Infrastructure.Helpers;
 using Nexti.Infrastructure.Persistences.Interfaces;
 using System.Linq.Dynamic.Core;

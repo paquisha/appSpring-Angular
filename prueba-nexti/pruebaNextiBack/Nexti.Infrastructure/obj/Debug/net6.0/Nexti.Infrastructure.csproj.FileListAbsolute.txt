@@ -1,0 +1,17 @@
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Infrastructure.deps.json
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Infrastructure.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Infrastructure.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Domain.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Utilities.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Domain.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\bin\Debug\net6.0\Nexti.Utilities.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.csproj.AssemblyReference.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.AssemblyInfoInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.AssemblyInfo.cs
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.csproj.CoreCompileInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.csproj.CopyComplete
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\refint\Nexti.Infrastructure.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\Nexti.Infrastructure.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Infrastructure\obj\Debug\net6.0\ref\Nexti.Infrastructure.dll

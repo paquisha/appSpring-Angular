@@ -1,0 +1,14 @@
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\bin\Debug\net6.0\Nexti.Domain.deps.json
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\bin\Debug\net6.0\Nexti.Domain.runtimeconfig.json
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\bin\Debug\net6.0\Nexti.Domain.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\bin\Debug\net6.0\Nexti.Domain.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.csproj.AssemblyReference.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.AssemblyInfoInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.AssemblyInfo.cs
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.csproj.CoreCompileInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\refint\Nexti.Domain.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\Nexti.Domain.genruntimeconfig.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Domain\obj\Debug\net6.0\ref\Nexti.Domain.dll

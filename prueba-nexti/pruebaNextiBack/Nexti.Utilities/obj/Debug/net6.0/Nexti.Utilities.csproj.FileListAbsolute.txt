@@ -1,0 +1,12 @@
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\bin\Debug\net6.0\Nexti.Utilities.deps.json
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\bin\Debug\net6.0\Nexti.Utilities.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\bin\Debug\net6.0\Nexti.Utilities.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.csproj.AssemblyReference.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.AssemblyInfoInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.AssemblyInfo.cs
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.csproj.CoreCompileInputs.cache
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\refint\Nexti.Utilities.dll
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\Nexti.Utilities.pdb
+C:\aprender\apps-fullStack\prueba-nexti\pruebaNextiBack\Nexti.Utilities\obj\Debug\net6.0\ref\Nexti.Utilities.dll

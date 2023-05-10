@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Nexti.Application\Nexti.Application.csproj" />
     <ProjectReference Include="..\Nexti.Infrastructure\Nexti.Infrastructure.csproj" />
     <ProjectReference Include="..\Nexti.Utilities\Nexti.Utilities.csproj" />

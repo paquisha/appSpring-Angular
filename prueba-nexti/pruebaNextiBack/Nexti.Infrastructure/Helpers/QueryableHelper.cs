@@ -1,4 +1,5 @@
 ﻿using Nexti.Infrastructure.Commons.Bases;
+using Nexti.Infrastructure.Commons.Bases.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
