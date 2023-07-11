@@ -12,6 +12,5 @@ namespace ApiFutbolistas.Context
 
         }
         public DbSet<Futbolista> futbolista { get; set; }
-        public DbSet<GestoresDb> gestoresdb { get; set; }
     }
 }

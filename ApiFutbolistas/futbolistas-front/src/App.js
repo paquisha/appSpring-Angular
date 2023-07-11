@@ -6,7 +6,7 @@ import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 
 function App() {
 
-  const baseUrl='https://localhost:7032/api/futbolista';
+  const baseUrl='https://localhost:44310/api/Futbolista';
 
   const [data, setdata] = useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
